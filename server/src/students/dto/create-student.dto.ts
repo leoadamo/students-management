@@ -1,13 +1,16 @@
 // DEPENDENCIES
-import { IsNotEmpty, IsDate, IsPhoneNumber, IsEmail } from 'class-validator';
+import { IsNotEmpty, IsISO8601, IsPhoneNumber, IsEmail } from 'class-validator';
 
 export class CreateStudentDto {
   @IsNotEmpty()
   name: string;
 
   @IsNotEmpty()
-  @IsDate()
+  @IsISO8601()
   date_of_birth: Date;
+
+  @IsNotEmpty()
+  address: string;
 
   @IsPhoneNumber('BR')
   phone: string;
