@@ -1,5 +1,5 @@
 // DEPENDENCIES
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 
 // DTOs
 import { CreateStudentDto } from './dto/create-student.dto';
@@ -17,5 +17,15 @@ export class StudentsController {
   @Post('/create')
   createStudent(@Body() createStudentDto: CreateStudentDto): Promise<Students> {
     return this.studentsService.createStudent(createStudentDto);
+  }
+
+  @Get('/all')
+  getStudents(): Promise<Students[]> {
+    return this.studentsService.getStudents();
+  }
+
+  @Get(':id')
+  getStudent(@Param('id') id: string): Promise<Students> {
+    return this.studentsService.getStudent(id);
   }
 }
