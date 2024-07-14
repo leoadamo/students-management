@@ -7,10 +7,6 @@ import { DatabaseModule } from './database/database.module';
 import { StudentsModule } from './students/students.module';
 
 @Module({
-  imports: [
-    ConfigModule.forRoot({}), 
-    DatabaseModule, 
-    StudentsModule
-  ],
+  imports: [ConfigModule.forRoot({}), DatabaseModule, StudentsModule],
 })
 export class AppModule {}
