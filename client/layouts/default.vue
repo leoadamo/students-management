@@ -1,7 +1,7 @@
 <template>
   <v-app dark>
     <v-app-bar app color="primary" dark>
-      <v-toolbar-title>Meu Projeto</v-toolbar-title>
+      <v-toolbar-title>PI - Gerenciador de alunos IMDAZ</v-toolbar-title>
     </v-app-bar>
 
     <v-main>

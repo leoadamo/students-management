@@ -1,13 +1,15 @@
 <template>
-  <v-app>
-    <v-container>
-      <v-text-field v-model="msg" />
-    </v-container>
-  </v-app>
+  <v-container fluid>
+    <StudentList />
+  </v-container>
 </template>
 
 <script>
+import StudentList from '~/components/StudentList.vue'
+
 export default {
-  name: 'IndexPage',
+  components: {
+    StudentList,
+  },
 }
 </script>
