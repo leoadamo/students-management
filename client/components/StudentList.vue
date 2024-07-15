@@ -1,42 +1,5 @@
 <template>
   <v-container fluid>
-    <!-- Busca por ID -->
-    <v-row>
-      <v-col cols="12" class="mt-4">
-        <v-text-field
-          v-model="searchId"
-          label="Buscar aluno por ID"
-          outlined
-          clearable
-          @keyup.enter="searchStudentById"
-        ></v-text-field>
-        <v-btn color="primary" @click="searchStudentById">Buscar</v-btn>
-      </v-col>
-    </v-row>
-
-    <!-- Mensagem de Erro -->
-    <v-row v-if="searchError" class="mt-2">
-      <v-col cols="12">
-        <v-alert type="error" outlined>{{ searchError }}</v-alert>
-      </v-col>
-    </v-row>
-
-    <!-- Detalhes do Aluno Encontrado -->
-    <v-row v-if="selectedStudent" class="mt-4">
-      <v-col cols="12">
-        <v-card>
-          <v-card-title>Dados do Aluno</v-card-title>
-          <v-card-text>
-            <div><strong>Nome:</strong> {{ selectedStudent.name }}</div>
-            <div><strong>Data de Nascimento:</strong> {{ selectedStudent.date_of_birth }}</div>
-            <div><strong>Telefone:</strong> {{ selectedStudent.phone }}</div>
-            <div><strong>Email:</strong> {{ selectedStudent.email }}</div>
-            <div><strong>Endereço:</strong> {{ selectedStudent.address }}</div>
-          </v-card-text>
-        </v-card>
-      </v-col>
-    </v-row>
-
     <!-- Listagem de alunos -->
     <v-row>
       <v-col cols="12">
@@ -45,6 +8,16 @@
           :items="students"
           class="elevation-1"
         >
+          <template #item.actions="{ item }">
+            <v-btn
+              color="primary"
+              small
+              @click="searchStudentById(item)"
+            >
+              Ver mais
+            </v-btn>
+          </template>
+
           <template #top>
             <v-toolbar flat>
               <v-toolbar-title>Lista de Alunos</v-toolbar-title>
@@ -101,6 +74,23 @@
         </v-data-table>
       </v-col>
     </v-row>
+
+    <!-- Detalhes do Aluno Encontrado -->
+    <v-row v-if="selectedStudent" class="mt-4">
+      <v-col cols="12">
+        <v-card>
+          <v-card-title>Dados do Aluno</v-card-title>
+          <v-card-text>
+            <div><strong>Nome:</strong> {{ selectedStudent.name }}</div>
+            <div><strong>Data de Nascimento:</strong> {{ selectedStudent.date_of_birth }}</div>
+            <div><strong>Telefone:</strong> {{ selectedStudent.phone }}</div>
+            <div><strong>Email:</strong> {{ selectedStudent.email }}</div>
+            <div><strong>Endereço:</strong> {{ selectedStudent.address }}</div>
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
+
   </v-container>
 </template>
 
@@ -111,10 +101,8 @@ export default {
       dialog: false,
       headers: [
         { text: 'Nome', value: 'name' },
-        { text: 'Data de Nascimento', value: 'date_of_birth' },
-        { text: 'Telefone', value: 'phone' },
         { text: 'Email', value: 'email' },
-        { text: 'Endereço', value: 'address' },
+        { text: 'Ações', value: 'actions' },
       ],
       students: [],
       newStudent: {
@@ -126,7 +114,6 @@ export default {
       },
 
       searchId: '',
-      searchError: '',
       selectedStudent: null
     };
   },
@@ -182,16 +169,17 @@ export default {
       this.dialog = false;
     },
 
-    async searchStudentById() {
+    async searchStudentById({id}) {
+      this.searchId = this.searchId || id;
+
       try {
-        if (this.searchId.trim() === '') {
+        if (this.searchId === '') {
           this.searchError = 'Por favor, insira um ID válido.';
 
           return;
         }
 
-        const id = parseInt(this.searchId.trim(), 10);
-        const { data } = await this.$axios.get(`/students/${id}`);
+        const { data } = await this.$axios.get(`/students/${this.searchId}`);
 
         // Limpa o campo de busca e o erro
         this.searchId = '';
