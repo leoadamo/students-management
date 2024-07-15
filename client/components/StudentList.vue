@@ -67,8 +67,6 @@
 </template>
 
 <script>
-import axios from 'axios';
-
 export default {
   data() {
     return {
@@ -80,9 +78,7 @@ export default {
         { text: 'Email', value: 'email' },
         { text: 'Endereço', value: 'address' },
       ],
-      students: [
-        // Lista inicial de estudantes (pode ser vazia ou carregada de uma API)
-      ],
+      students: [],
       newStudent: {
         name: '',
         date_of_birth: '',
@@ -92,7 +88,22 @@ export default {
       },
     };
   },
+
+  async created() {
+    await this.getStudents();
+  },
+
   methods: {
+    async getStudents() {
+      try {
+        const { data } = await this.$axios.get('/students/all');
+        this.students = data;
+      } catch (error) {
+        console.error('Erro ao buscar alunos:', error);
+        this.students = [];
+      }
+    },
+
     async addStudent() {
       try {
         const response = await this.$axios.post('/students/create', {
@@ -103,22 +114,25 @@ export default {
           address: this.newStudent.address,
         });
 
-        // Adiciona o novo estudante à lista local
         this.students.push(response.data);
 
-        // Limpa o formulário
-        this.newStudent = {
-          name: '',
-          date_of_birth: '',
-          phone: '',
-          email: '',
-          address: '',
-        };
-        this.dialog = false;
+        this.clearForm();
+
       } catch (error) {
         console.error('Erro ao adicionar estudante:', error);
       }
     },
+
+    clearForm() {
+      this.newStudent = {
+        name: '',
+        date_of_birth: '',
+        phone: '',
+        email: '',
+        address: '',
+      };
+      this.dialog = false;
+    }
   },
 };
 </script>
