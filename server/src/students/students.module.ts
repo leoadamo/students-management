@@ -11,7 +11,7 @@ import {
 import { StudentsController } from './students.controller';
 
 // ENTITIES
-import { Students } from './students.entity';
+import { Student } from './student.entity';
 
 // SERVICES
 import { StudentsService } from './students.service';
@@ -20,15 +20,15 @@ import { StudentsService } from './students.service';
 import { customStudentsRepository } from './students.repository';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Students])],
+  imports: [TypeOrmModule.forFeature([Student])],
   controllers: [StudentsController],
   providers: [
     {
-      provide: getRepositoryToken(Students),
+      provide: getRepositoryToken(Student),
       inject: [getDataSourceToken()],
       useFactory(datasource: DataSource) {
         return datasource
-          .getRepository(Students)
+          .getRepository(Student)
           .extend(customStudentsRepository);
       },
     },

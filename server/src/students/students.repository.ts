@@ -5,25 +5,25 @@ import { Repository } from 'typeorm';
 import { CreateStudentDto } from './dto/create-student.dto';
 
 // ENTITIES
-import { Students } from './students.entity';
+import { Student } from './student.entity';
 
-export interface StudentsRepository extends Repository<Students> {
-  this: Repository<Students>;
-  createStudent(Students: CreateStudentDto);
-  getStudent(id: string): Promise<Students>;
-  getStudents(): Promise<Students[]>;
+export interface StudentsRepository extends Repository<Student> {
+  this: Repository<Student>;
+  createStudent(Student: CreateStudentDto);
+  getStudent(id: string): Promise<Student>;
+  getStudents(): Promise<Student[]>;
 }
 
 export const customStudentsRepository: Pick<StudentsRepository, any> = {
-  createStudent(this: Repository<Students>, Students) {
-    return this.save(Students);
+  createStudent(this: Repository<Student>, Student) {
+    return this.save(Student);
   },
 
-  getStudent(this: Repository<Students>, id) {
+  getStudent(this: Repository<Student>, id) {
     return this.findOne({ where: { id } });
   },
 
-  getStudents(this: Repository<Students>) {
+  getStudents(this: Repository<Student>) {
     return this.find();
   },
 };

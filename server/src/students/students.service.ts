@@ -6,7 +6,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { CreateStudentDto } from './dto/create-student.dto';
 
 // ENTITIES
-import { Students } from './students.entity';
+import { Student } from './student.entity';
 
 // REPOSITORY
 import { StudentsRepository } from './students.repository';
@@ -14,19 +14,19 @@ import { StudentsRepository } from './students.repository';
 @Injectable()
 export class StudentsService {
   constructor(
-    @InjectRepository(Students)
+    @InjectRepository(Student)
     private studentsRepository: StudentsRepository,
   ) {}
 
-  createStudent(createStudentDto: CreateStudentDto): Promise<Students> {
+  createStudent(createStudentDto: CreateStudentDto): Promise<Student> {
     return this.studentsRepository.createStudent(createStudentDto);
   }
 
-  getStudents(): Promise<Students[]> {
+  getStudents(): Promise<Student[]> {
     return this.studentsRepository.getStudents();
   }
 
-  async getStudent(id: string): Promise<Students> {
+  async getStudent(id: string): Promise<Student> {
     const found = await this.studentsRepository.getStudent(id);
 
     if (!found) {
