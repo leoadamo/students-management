@@ -26,11 +26,46 @@
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
+## Prerequisites
+
+* Node.js >= 16.13.2
+* pnpm >= 9.1.0
+* MySQL = 5.7
+
 ## Installation
 
 ```bash
+# Case you don't have pnpm installed yet
+$ npm install -g pnpm
+
+# Once pnpm is installed globally in your computer
 $ pnpm install
+
+# Creating a .env file at project root
+$ cp .env.example .env
 ```
+
+Once you have done with the above commands, it's time to create your local database.
+When finished, start the DB and fill the `.env` file with the following values:
+
+```bash
+# Your DB host, problably it will be localhost
+DATABASE_HOST=
+
+# The DB port. Example: 3306
+DATABASE_PORT=
+
+# The DB username
+DATABASE_USERNAME=
+
+# The DB password
+DATABASE_PASSWORD=
+
+# The DB name
+DATABASE_NAME=
+```
+
+That's pretty much it. When finishing the previous steps, you should be safe to go start running the project locally. :rocket:
 
 ## Running the app
 
@@ -58,15 +93,13 @@ $ pnpm run test:e2e
 $ pnpm run test:cov
 ```
 
+## Collections
+
+Check out the `collections` folder at project's root, to have some sample requests.
+
 ## Support
 
 Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
 
 ## License
 
